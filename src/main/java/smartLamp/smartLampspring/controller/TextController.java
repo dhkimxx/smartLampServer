@@ -11,4 +11,10 @@ public class TextController {
         model.addAttribute("data", "hello!!");
         return "hello";
     }
+
+    @GetMapping("/1")
+    public String helloWorld(Model model){
+        model.addAttribute("data", "hello, world!!");
+        return "hello";
+    }
 }
