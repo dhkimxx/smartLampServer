@@ -12,7 +12,7 @@ public class TextController {
         return "hello";
     }
 
-    @GetMapping("/1")
+    @GetMapping("/hello")
     public String helloWorld(Model model){
         model.addAttribute("data", "hello, world!!");
         return "hello";
