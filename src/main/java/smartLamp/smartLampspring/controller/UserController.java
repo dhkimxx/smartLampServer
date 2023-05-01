@@ -19,6 +19,8 @@ public class UserController {
     // 사용자 생성 API
     @PostMapping("/users")
     public ResponseEntity<Void> createUser(@RequestBody User user) {
+        System.out.println("user = " + user);
+
         if (userRepository.containUserId(user.getUserId())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
@@ -30,6 +32,8 @@ public class UserController {
     // 사용자 인증 API
     @PostMapping("/authenticate")
     public ResponseEntity<Void> authenticateUser(@RequestBody User user) {
+        System.out.println("user = " + user);
+
         if (userRepository.containUserId(user.getUserId())) {
             User storedUser = userRepository.findById(user.getUserId());
             if (storedUser.getUserPw().equals(user.getUserPw())) {
