@@ -1,24 +1,29 @@
 package smartLamp.smartLampspring.model;
 
+import java.util.ArrayList;
+
 public class User {
-    private String username;
-    private String password;
+    public String userId;
+    public String userPw;
+    public String userName;
+    public ArrayList<String> unitList;
+    public ArrayList<String> getUnitList;
     private boolean authenticated;
 
-    public String getUsername() {
-        return username;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getPassword() {
-        return password;
+    public String getUserPw() {
+        return userPw;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUserPw(String userPw) {
+        this.userPw = userPw;
     }
 
     public boolean isAuthenticated() {
@@ -27,5 +32,29 @@ public class User {
 
     public void setAuthenticated(boolean authenticated) {
         this.authenticated = authenticated;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public ArrayList<String> getUnitList() {
+        return unitList;
+    }
+
+    public void setUnitList(ArrayList<String> unitList) {
+        this.unitList = unitList;
+    }
+
+    public ArrayList<String> getGetUnitList() {
+        return getUnitList;
+    }
+
+    public void setGetUnitList(ArrayList<String> getUnitList) {
+        this.getUnitList = getUnitList;
     }
 }
