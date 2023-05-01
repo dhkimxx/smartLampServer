@@ -62,6 +62,7 @@ public class UserController {
                 return ResponseEntity.ok(storedUser);
             }
         }
+
         return ResponseEntity.notFound().build();
     }
 }
