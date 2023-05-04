@@ -5,7 +5,6 @@ public class Unit {
     public String unitName;
     public Integer distance;
     public Integer time;
-    public String groupCode;
 
     public String getUnitCode() {
         return unitCode;
@@ -39,11 +38,4 @@ public class Unit {
         this.time = time;
     }
 
-    public String getGroupCode() {
-        return groupCode;
-    }
-
-    public void setGroupCode(String groupCode) {
-        this.groupCode = groupCode;
-    }
 }

@@ -8,9 +8,6 @@ import smartLamp.smartLampspring.model.User;
 import smartLamp.smartLampspring.repository.MemoryUserRepository;
 import smartLamp.smartLampspring.repository.UserRepository;
 
-
-
-
 @RestController
 @RequestMapping("/api")
 public class UserController {
@@ -19,32 +16,38 @@ public class UserController {
     // 사용자 생성 API
     @PostMapping("/users")
     public ResponseEntity<Void> createUser(@RequestBody User user) {
-        System.out.println("user = " + user);
-
         if (userRepository.containUserId(user.getUserId())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
         userRepository.save(user);
-        System.out.println(user);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    // 사용자 수정 API
+    @PutMapping("/users")
+    public ResponseEntity<Void> updateUser(@RequestBody User user) {
+        if (userRepository.containUserId(user.getUserId())) {
+            userRepository.save(user);
+            System.out.println("user.toString() = " + user.toString());
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        }
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     // 사용자 인증 API
     @PostMapping("/authenticate")
-    public ResponseEntity<Void> authenticateUser(@RequestBody User user) {
-        System.out.println("user = " + user);
-
+    public ResponseEntity<User> authenticateUser(@RequestBody User user) {
         if (userRepository.containUserId(user.getUserId())) {
             User storedUser = userRepository.findById(user.getUserId());
             if (storedUser.getUserPw().equals(user.getUserPw())) {
                 storedUser.setAuthenticated(true);
-                System.out.println(userRepository.findAll());
-                return ResponseEntity.ok().build();
+                return ResponseEntity.ok(storedUser);
             }
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
+    // 사용자 로그아웃
     @DeleteMapping("/authenticate")
     public ResponseEntity<Void> logoutUser(@RequestBody User user) {
         if (userRepository.containUserId(user.getUserId())) {
@@ -66,7 +69,6 @@ public class UserController {
                 return ResponseEntity.ok(storedUser);
             }
         }
-
         return ResponseEntity.notFound().build();
     }
 }

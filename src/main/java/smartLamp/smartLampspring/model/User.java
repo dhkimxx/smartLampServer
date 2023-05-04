@@ -1,13 +1,14 @@
 package smartLamp.smartLampspring.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class User {
     public String userId;
     public String userPw;
     public String userName;
-    public ArrayList<String> unitList;
-    public ArrayList<String> getUnitList;
+    public List<String> unitList;
+
     private boolean authenticated;
 
     public String getUserId() {
@@ -42,7 +43,7 @@ public class User {
         this.userName = userName;
     }
 
-    public ArrayList<String> getUnitList() {
+    public List<String> getUnitList() {
         return unitList;
     }
 
@@ -50,11 +51,14 @@ public class User {
         this.unitList = unitList;
     }
 
-    public ArrayList<String> getGetUnitList() {
-        return getUnitList;
-    }
-
-    public void setGetUnitList(ArrayList<String> getUnitList) {
-        this.getUnitList = getUnitList;
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId='" + userId + '\'' +
+                ", userPw='" + userPw + '\'' +
+                ", userName='" + userName + '\'' +
+                ", unitList=" + unitList +
+                ", authenticated=" + authenticated +
+                '}';
     }
 }
