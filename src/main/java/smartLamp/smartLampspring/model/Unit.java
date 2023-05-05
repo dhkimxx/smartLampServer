@@ -38,4 +38,13 @@ public class Unit {
         this.time = time;
     }
 
+    @Override
+    public String toString() {
+        return "Unit{" +
+                "unitCode='" + unitCode + '\'' +
+                ", unitName='" + unitName + '\'' +
+                ", distance=" + distance +
+                ", time=" + time +
+                '}';
+    }
 }

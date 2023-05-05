@@ -6,4 +6,6 @@ public interface UnitRepository {
     void save(Unit unit);
 
     Unit findByCode(String unitCode);
+
+    boolean containUnitCode(String unitCode);
 }

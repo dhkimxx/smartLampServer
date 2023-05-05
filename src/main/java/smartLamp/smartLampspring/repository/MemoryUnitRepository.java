@@ -19,4 +19,7 @@ public class MemoryUnitRepository implements UnitRepository {
     public Unit findByCode(String unitCode) {
         return store.get(unitCode);
     }
+
+    @Override
+    public boolean containUnitCode(String unitCode){return store.containsKey(unitCode);}
 }
