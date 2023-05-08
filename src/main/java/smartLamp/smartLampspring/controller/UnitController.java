@@ -38,4 +38,16 @@ public class UnitController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    @DeleteMapping("/unit")
+    // 디바이스 삭제 API
+    public ResponseEntity<Void> deleteUnit(@RequestBody Unit unit){
+        if(unitRepository.containUnitCode(unit.getUnitCode())){
+            unitRepository.delete(unit);
+            System.out.println("디바이스 정보 삭제 응답");
+            System.out.println("storedUnit.toString() = " + unit.toString());
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }

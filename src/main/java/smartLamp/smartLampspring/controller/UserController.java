@@ -44,7 +44,7 @@ public class UserController {
             User storedUser = userRepository.findById(user.getUserId());
             if (storedUser.getUserPw().equals(user.getUserPw())) {
                 storedUser.setAuthenticated(true);
-                System.out.println("사용자 인증");
+                System.out.println("사용자 로그인 인증");
                 System.out.println("storedUser.toString() = " + storedUser.toString());
                 return ResponseEntity.ok(storedUser);
             }
@@ -52,12 +52,15 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
+    // 사용자 로그아웃 API
     @DeleteMapping("/authenticate")
     public ResponseEntity<Void> logoutUser(@RequestBody User user) {
         if (userRepository.containUserId(user.getUserId())) {
             User storedUser = userRepository.findById(user.getUserId());
             if (storedUser.isAuthenticated()) {
                 storedUser.setAuthenticated(false);
+                System.out.println("사용자 로그아웃");
+                System.out.println("storedUser.toString() = " + storedUser.toString());
                 return ResponseEntity.ok().build();
             }
         }

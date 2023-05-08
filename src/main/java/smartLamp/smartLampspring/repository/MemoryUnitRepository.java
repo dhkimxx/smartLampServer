@@ -16,6 +16,11 @@ public class MemoryUnitRepository implements UnitRepository {
     }
 
     @Override
+    public void delete(Unit unit) {
+        store.remove(unit.getUnitCode());
+    }
+
+    @Override
     public Unit findByCode(String unitCode) {
         return store.get(unitCode);
     }
