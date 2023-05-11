@@ -1,18 +1,20 @@
 package smartLamp.smartLampspring.repository;
 
+import org.springframework.stereotype.Component;
 import smartLamp.smartLampspring.model.Unit;
 import smartLamp.smartLampspring.model.User;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
+@Component
 public class MemoryUnitRepository implements UnitRepository {
 
     private static Map<String, Unit> store = new HashMap<>();
 
     @Override
-    public void save(Unit unit) {
+    public Unit save(Unit unit) {
         store.put(unit.getUnitCode(), unit);
+        return unit;
     }
 
     @Override
@@ -21,10 +23,12 @@ public class MemoryUnitRepository implements UnitRepository {
     }
 
     @Override
-    public Unit findByCode(String unitCode) {
-        return store.get(unitCode);
+    public Optional<Unit> findByCode(String unitCode) {
+        return Optional.ofNullable(store.get(unitCode));
     }
 
     @Override
-    public boolean containUnitCode(String unitCode){return store.containsKey(unitCode);}
+    public List<Unit> findAll() {
+        return new ArrayList<>(store.values());
+    }
 }

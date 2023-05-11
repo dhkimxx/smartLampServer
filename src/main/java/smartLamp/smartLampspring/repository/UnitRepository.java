@@ -2,12 +2,15 @@ package smartLamp.smartLampspring.repository;
 
 import smartLamp.smartLampspring.model.Unit;
 
+import java.util.List;
+import java.util.Optional;
+
 public interface UnitRepository {
-    void save(Unit unit);
+    Unit save(Unit unit);
 
     void delete(Unit unit);
 
-    Unit findByCode(String unitCode);
+    Optional<Unit> findByCode(String unitCode);
 
-    boolean containUnitCode(String unitCode);
+    List<Unit> findAll();
 }
