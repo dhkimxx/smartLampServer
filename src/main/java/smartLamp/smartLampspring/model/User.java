@@ -1,5 +1,7 @@
 package smartLamp.smartLampspring.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,7 @@ public class User {
     @Column(name = "user_name")
     public String userName;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
     public List<Unit> unitList;
 
     private boolean authenticated;
@@ -58,6 +61,13 @@ public class User {
         this.unitList = unitList;
     }
 
+    public void addUnit(Unit unit){
+        if(!this.unitList.contains(unit)) this.unitList.add(unit);
+        if(unit.getUser() != this){
+            unit.setUser(this);
+        }
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -67,12 +77,5 @@ public class User {
                 ", unitList=" + unitList +
                 ", authenticated=" + authenticated +
                 '}';
-    }
-
-    public void addUnit(Unit unit){
-        this.unitList.add(unit);
-        if(unit.getUser() != this){
-            unit.setUser(this);
-        }
     }
 }

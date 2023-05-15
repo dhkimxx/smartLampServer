@@ -1,5 +1,7 @@
 package smartLamp.smartLampspring.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity(name="unit")
@@ -11,8 +13,9 @@ public class Unit {
     public String unitName;
     public Integer distance;
     public Integer time;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     public User user;
 
     public String getUnitCode() {
@@ -54,18 +57,18 @@ public class Unit {
     public void setUser(User user) {
         this.user = user;
         if(!user.getUnitList().contains(this)){
-            user.getUnitList().add(this);
+            user.addUnit(this);
         }
     }
 
-    @Override
-    public String toString() {
-        return "Unit{" +
-                "unitCode='" + unitCode + '\'' +
-                ", unitName='" + unitName + '\'' +
-                ", distance=" + distance +
-                ", time=" + time +
-                ", user=" + user +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Unit{" +
+//                "unitCode='" + unitCode + '\'' +
+//                ", unitName='" + unitName + '\'' +
+//                ", distance=" + distance +
+//                ", time=" + time +
+//                ", user=" + user +
+//                '}';
+//    }
 }

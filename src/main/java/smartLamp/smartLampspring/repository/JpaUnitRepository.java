@@ -1,6 +1,7 @@
 package smartLamp.smartLampspring.repository;
 
 import smartLamp.smartLampspring.model.Unit;
+import smartLamp.smartLampspring.model.User;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -15,21 +16,23 @@ public class JpaUnitRepository implements UnitRepository{
     }
     @Override
     public Unit save(Unit unit) {
-        return null;
+        em.persist(unit);
+        return unit;
     }
 
     @Override
     public void delete(Unit unit) {
-
+        em.remove(unit);
     }
 
     @Override
     public Optional<Unit> findByCode(String unitCode) {
-        return Optional.empty();
+        Unit unit = em.find(Unit.class, unitCode);
+        return Optional.ofNullable(unit);
     }
 
     @Override
     public List<Unit> findAll() {
-        return null;
+        return em.createQuery("select m from unit m", Unit.class).getResultList();
     }
 }
