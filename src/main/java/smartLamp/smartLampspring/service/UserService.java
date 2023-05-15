@@ -1,18 +1,18 @@
 package smartLamp.smartLampspring.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import smartLamp.smartLampspring.model.User;
 import smartLamp.smartLampspring.repository.UserRepository;
 
 import java.util.Objects;
 import java.util.Optional;
 
-@Component
+@Transactional
 public class UserService {
     private final UserRepository userRepository;
 
-    @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -21,6 +21,7 @@ public class UserService {
         Optional<User> storedUser = userRepository.findById(user.getUserId());
         if (storedUser.isPresent()) {
             storedUser.get().setAuthenticated(false);
+            userRepository.save(storedUser.get());
             return true;
         }
         return false;

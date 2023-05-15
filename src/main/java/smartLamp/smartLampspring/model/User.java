@@ -1,13 +1,20 @@
 package smartLamp.smartLampspring.model;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity(name="user")
 public class User {
+    @Id
+    @Column(name = "user_id")
     public String userId;
+    @Column(name = "user_pw")
     public String userPw;
+    @Column(name = "user_name")
     public String userName;
-    public List<String> unitList;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    public List<Unit> unitList;
 
     private boolean authenticated;
 
@@ -43,11 +50,11 @@ public class User {
         this.userName = userName;
     }
 
-    public List<String> getUnitList() {
+    public List<Unit> getUnitList() {
         return unitList;
     }
 
-    public void setUnitList(ArrayList<String> unitList) {
+    public void setUnitList(ArrayList<Unit> unitList) {
         this.unitList = unitList;
     }
 
@@ -60,5 +67,12 @@ public class User {
                 ", unitList=" + unitList +
                 ", authenticated=" + authenticated +
                 '}';
+    }
+
+    public void addUnit(Unit unit){
+        this.unitList.add(unit);
+        if(unit.getUser() != this){
+            unit.setUser(this);
+        }
     }
 }

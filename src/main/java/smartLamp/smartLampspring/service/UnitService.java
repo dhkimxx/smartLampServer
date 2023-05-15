@@ -1,17 +1,17 @@
 package smartLamp.smartLampspring.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import smartLamp.smartLampspring.model.Unit;
 import smartLamp.smartLampspring.repository.UnitRepository;
 
 import java.util.Optional;
 
-@Component
+@Transactional
 public class UnitService {
     private final UnitRepository unitRepository;
 
-    @Autowired
     public UnitService(UnitRepository unitRepository){
         this.unitRepository = unitRepository;
     }

@@ -1,10 +1,19 @@
 package smartLamp.smartLampspring.model;
 
+import javax.persistence.*;
+
+@Entity(name="unit")
 public class Unit {
+    @Id
+    @Column(name = "unit_code")
     public String unitCode;
+    @Column(name = "unit_name")
     public String unitName;
     public Integer distance;
     public Integer time;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    public User user;
 
     public String getUnitCode() {
         return unitCode;
@@ -38,6 +47,17 @@ public class Unit {
         this.time = time;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+        if(!user.getUnitList().contains(this)){
+            user.getUnitList().add(this);
+        }
+    }
+
     @Override
     public String toString() {
         return "Unit{" +
@@ -45,6 +65,7 @@ public class Unit {
                 ", unitName='" + unitName + '\'' +
                 ", distance=" + distance +
                 ", time=" + time +
+                ", user=" + user +
                 '}';
     }
 }

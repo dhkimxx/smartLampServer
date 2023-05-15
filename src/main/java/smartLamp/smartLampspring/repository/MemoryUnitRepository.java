@@ -6,7 +6,6 @@ import smartLamp.smartLampspring.model.User;
 
 import java.util.*;
 
-@Component
 public class MemoryUnitRepository implements UnitRepository {
 
     private static Map<String, Unit> store = new HashMap<>();
