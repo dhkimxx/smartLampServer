@@ -29,6 +29,17 @@ public class UnitService {
         return unitRepository.findByCode(unitCode);
     }
 
+    public boolean update(Unit unit){
+        Optional<Unit> storedUnit = unitRepository.findByCode(unit.getUnitCode());
+        if (storedUnit.isPresent()) {
+            storedUnit.get().setDistance(unit.getDistance());
+            storedUnit.get().setTime(unit.getTime());
+            unitRepository.save(storedUnit.get());
+            return true;
+        }
+        return false;
+    }
+
     public boolean delete(String unitCode){
         Optional<Unit> storedUnit = unitRepository.findByCode(unitCode);
         if(storedUnit.isPresent()){

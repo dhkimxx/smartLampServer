@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import smartLamp.smartLampspring.model.Unit;
+import smartLamp.smartLampspring.model.User;
 import smartLamp.smartLampspring.service.UnitService;
 
 @RestController
@@ -29,12 +30,22 @@ public class UnitController {
     }
 
     // 디바이스 정보 반환 API
-    @GetMapping("/unit/{unitCode}")
-    public ResponseEntity<Unit> getUnit(@PathVariable String unitCode) {
-        if (unitService.read(unitCode).isPresent()) {
-            return ResponseEntity.ok(unitService.read(unitCode).get());
+//    @GetMapping("/unit/{unitCode}")
+//    public ResponseEntity<Unit> getUnit(@PathVariable String unitCode) {
+//        if (unitService.read(unitCode).isPresent()) {
+//            return ResponseEntity.ok(unitService.read(unitCode).get());
+//        }
+//        return ResponseEntity.notFound().build();
+//    }
+
+
+    // 디바이스 정보 수정
+    @PutMapping("/unit")
+    public ResponseEntity<Void> updateUser(@RequestBody Unit unit) {
+        if(unitService.update(unit)){
+            return ResponseEntity.status(HttpStatus.CREATED).build();
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @DeleteMapping("/unit")
