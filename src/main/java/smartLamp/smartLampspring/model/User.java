@@ -10,14 +10,14 @@ import java.util.List;
 public class User {
     @Id
     @Column(name = "user_id")
-    public String userId;
+    private String userId;
     @Column(name = "user_pw")
-    public String userPw;
+    private String userPw;
     @Column(name = "user_name")
-    public String userName;
+    private String userName;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
-    public List<Unit> unitList;
+    private List<Unit> unitList;
 
     private boolean authenticated;
 

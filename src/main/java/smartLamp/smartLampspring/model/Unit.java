@@ -8,15 +8,15 @@ import javax.persistence.*;
 public class Unit {
     @Id
     @Column(name = "unit_code")
-    public String unitCode;
+    private String unitCode;
     @Column(name = "unit_name")
-    public String unitName;
-    public Integer distance;
-    public Integer time;
+    private String unitName;
+    private Integer distance;
+    private Integer time;
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonBackReference
-    public User user;
+    private User user;
 
     public String getUnitCode() {
         return unitCode;
