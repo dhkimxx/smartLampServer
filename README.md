@@ -1,8 +1,8 @@
 # smartLampServer
 iot capstone project server
 
-## schema
-- User (사용자 스키마)
+## Schema
+- User (사용자 테이블)
     |컬럼명|설명|
     |---|---|
     |userId|사용자 고유 아이디|
@@ -11,7 +11,7 @@ iot capstone project server
     |unitList|등록 디바이스 리스트|
     |groupList|디바이스 그룹 리스트|
 
-- Unit (디바이스 유닛 스키마)
+- Unit (디바이스 유닛 테이블)
     |컬럼명|설명|
     |---|---|
     |unitCode|디바이스 고유 코드|
@@ -20,7 +20,7 @@ iot capstone project server
     |time|점등 시간|
     |groupCode|소속 그룹 코드|
 
-- Group (디바이스 그룹 스키마)
+- Group (디바이스 그룹 테이블)
     |컬럼명|설명|
     |---|---|
     |groupCode|그룹 고유 코드|
