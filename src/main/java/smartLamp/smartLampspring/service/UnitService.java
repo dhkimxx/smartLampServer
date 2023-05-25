@@ -34,6 +34,7 @@ public class UnitService {
         if (storedUnit.isPresent()) {
             storedUnit.get().setDistance(unit.getDistance());
             storedUnit.get().setTime(unit.getTime());
+            storedUnit.get().setBrightness(unit.getBrightness());
             unitRepository.save(storedUnit.get());
             return true;
         }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 
+
 @Entity(name="unit")
 public class Unit {
     @Id
@@ -13,6 +14,7 @@ public class Unit {
     private String unitName;
     private Integer distance;
     private Integer time;
+    private Integer brightness;
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonBackReference
@@ -50,6 +52,14 @@ public class Unit {
         this.time = time;
     }
 
+    public Integer getBrightness() {
+        return brightness;
+    }
+
+    public void setBrightness(Integer brightness) {
+        this.brightness = brightness;
+    }
+
     public User getUser() {
         return user;
     }
@@ -61,14 +71,15 @@ public class Unit {
         }
     }
 
-//    @Override
-//    public String toString() {
-//        return "Unit{" +
-//                "unitCode='" + unitCode + '\'' +
-//                ", unitName='" + unitName + '\'' +
-//                ", distance=" + distance +
-//                ", time=" + time +
-//                ", user=" + user +
-//                '}';
-//    }
+    @Override
+    public String toString() {
+        return "Unit{" +
+                "unitCode='" + unitCode + '\'' +
+                ", unitName='" + unitName + '\'' +
+                ", distance=" + distance +
+                ", time=" + time +
+                ", brightness=" + brightness +
+                ", user=" + user +
+                '}';
+    }
 }

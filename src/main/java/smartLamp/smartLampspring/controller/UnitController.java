@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import smartLamp.smartLampspring.model.Unit;
-import smartLamp.smartLampspring.model.User;
 import smartLamp.smartLampspring.service.UnitService;
 
 @RestController

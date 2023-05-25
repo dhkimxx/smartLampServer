@@ -1,7 +1,6 @@
 package smartLamp.smartLampspring.repository;
 
 import smartLamp.smartLampspring.model.Unit;
-import smartLamp.smartLampspring.model.User;
 
 import javax.persistence.EntityManager;
 import java.util.List;
