@@ -1,6 +1,6 @@
 package smartLamp.smartLampspring.repository;
 
-import smartLamp.smartLampspring.model.Unit;
+import smartLamp.smartLampspring.Entity.Unit;
 
 import java.util.List;
 import java.util.Optional;

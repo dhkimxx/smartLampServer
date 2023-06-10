@@ -1,9 +1,9 @@
 package smartLamp.smartLampspring.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import smartLamp.smartLampspring.model.User;
+import smartLamp.smartLampspring.dto.UserInfoDto;
+import smartLamp.smartLampspring.Entity.User;
 import smartLamp.smartLampspring.repository.UserRepository;
 
 import java.util.Objects;
@@ -13,12 +13,13 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
 
+    @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public boolean logout(User user) {
-        Optional<User> storedUser = userRepository.findById(user.getUserId());
+    public boolean logout(UserInfoDto userInfoDto) {
+        Optional<User> storedUser = userRepository.findById(userInfoDto.getUserId());
         if (storedUser.isPresent()) {
             storedUser.get().setAuthenticated(false);
             userRepository.save(storedUser.get());
@@ -27,25 +28,30 @@ public class UserService {
         return false;
     }
 
-    public Optional<User> login(User user) {
-        Optional<User> storedUser = userRepository.findById(user.getUserId());
+    public Optional<UserInfoDto> login(UserInfoDto userInfoDto) {
+        Optional<User> storedUser = userRepository.findById(userInfoDto.getUserId());
         if (storedUser.isPresent()) {
-            if (Objects.equals(storedUser.get().getUserPw(), user.getUserPw())) {
+            if (Objects.equals(storedUser.get().getUserPw(), userInfoDto.getUserPw())) {
                 storedUser.get().setAuthenticated(true);
                 userRepository.save(storedUser.get());
-                return storedUser;
+                userInfoDto.setUserName(storedUser.get().getUserName());
+                return Optional.of(userInfoDto);
             }
             return Optional.empty();
         }
         return Optional.empty();
     }
 
-    public boolean create(User user) {
-        Optional<User> storedUser = userRepository.findById(user.getUserId());
+    public boolean create(UserInfoDto userInfoDto) {
+        Optional<User> storedUser = userRepository.findById(userInfoDto.getUserId());
         if (storedUser.isPresent()) {
             return false;
         }
-        userRepository.save(user);
+        User newUser = new User();
+        newUser.setUserId(userInfoDto.getUserId());
+        newUser.setUserPw(userInfoDto.getUserPw());
+        newUser.setUserName(userInfoDto.getUserName());
+        userRepository.save(newUser);
         return true;
     }
 

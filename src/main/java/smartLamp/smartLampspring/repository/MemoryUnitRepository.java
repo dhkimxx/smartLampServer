@@ -1,8 +1,6 @@
 package smartLamp.smartLampspring.repository;
 
-import org.springframework.stereotype.Component;
-import smartLamp.smartLampspring.model.Unit;
-import smartLamp.smartLampspring.model.User;
+import smartLamp.smartLampspring.Entity.Unit;
 
 import java.util.*;
 

@@ -1,4 +1,4 @@
-package smartLamp.smartLampspring.model;
+package smartLamp.smartLampspring.Entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -66,16 +66,5 @@ public class User {
         if(unit.getUser() != this){
             unit.setUser(this);
         }
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId='" + userId + '\'' +
-                ", userPw='" + userPw + '\'' +
-                ", userName='" + userName + '\'' +
-                ", unitList=" + unitList +
-                ", authenticated=" + authenticated +
-                '}';
     }
 }

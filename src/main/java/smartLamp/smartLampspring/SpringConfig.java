@@ -34,7 +34,7 @@ public class SpringConfig {
 
     @Bean
     public UnitService unitService(){
-        return new UnitService(unitRepository());
+        return new UnitService(unitRepository(), userRepository());
     }
 
     @Bean
