@@ -6,39 +6,49 @@ import org.springframework.web.bind.annotation.*;
 import smartLamp.smartLampspring.dto.UserInfoDto;
 import smartLamp.smartLampspring.service.UserService;
 
+import javax.security.sasl.AuthenticationException;
+
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
     private final UserService userService;
 
-    private UserController(UserService userService){
+    private UserController(UserService userService) {
         this.userService = userService;
     }
 
     // 사용자 정보 등록 API
     @PostMapping
     public ResponseEntity<Void> createUser(@RequestBody UserInfoDto userInfoDto) {
-        if(userService.create(userInfoDto)){
+        try {
+            userService.register(userInfoDto);
             return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
-        return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 
     // 사용자 인증 API
     @PostMapping("/authenticate")
     public ResponseEntity<UserInfoDto> authenticateUser(@RequestBody UserInfoDto userInfoDto) {
-        if (userService.login(userInfoDto).isPresent()){
-                return ResponseEntity.ok(userService.login(userInfoDto).get());
-            }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        try {
+            UserInfoDto userInfo = userService.login(userInfoDto);
+            return ResponseEntity.ok(userInfo);
+        } catch (AuthenticationException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
     }
 
     // 사용자 로그아웃 API
     @DeleteMapping("/authenticate")
     public ResponseEntity<Void> logoutUser(@RequestBody UserInfoDto userInfoDto) {
-        if(userService.logout(userInfoDto)){
-                return ResponseEntity.ok().build();
+        try {
+            userService.logout(userInfoDto);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+
     }
 }
