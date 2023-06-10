@@ -43,7 +43,7 @@ public class UnitController {
 
 
     // 디바이스 정보 수정
-    @PutMapping
+    @PatchMapping
     public ResponseEntity<Void> updateUnit(@RequestBody UnitInfoDto unitInfoDto) {
         try {
             unitService.update(unitInfoDto);
