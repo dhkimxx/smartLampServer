@@ -7,7 +7,7 @@ import smartLamp.smartLampspring.dto.UserInfoDto;
 import smartLamp.smartLampspring.service.UserService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 public class UserController {
     private final UserService userService;
 
@@ -16,7 +16,7 @@ public class UserController {
     }
 
     // 사용자 정보 등록 API
-    @PostMapping("/user")
+    @PostMapping
     public ResponseEntity<Void> createUser(@RequestBody UserInfoDto userInfoDto) {
         if(userService.create(userInfoDto)){
             return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -41,13 +41,4 @@ public class UserController {
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
-
-    // 사용자 정보 수정 API
-//    @PutMapping("/user")
-//    public ResponseEntity<Void> updateUser(@RequestBody User user) {
-//        if(userService.update(user)){
-//            return ResponseEntity.status(HttpStatus.CREATED).build();
-//        }
-//        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-//    }
 }

@@ -13,7 +13,7 @@ import smartLamp.smartLampspring.service.UnitService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/unit")
 public class UnitController {
 
     private final UnitService unitService;
@@ -24,7 +24,7 @@ public class UnitController {
     }
 
     // 디바이스 정보 등록 API
-    @PostMapping("/unit")
+    @PostMapping
     public ResponseEntity<Void> createUnit(@RequestBody UnitInfoDto unitInfoDto) {
         if (unitService.create(unitInfoDto)) {
             return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -40,7 +40,7 @@ public class UnitController {
 
 
     // 디바이스 정보 수정
-    @PutMapping("/unit")
+    @PutMapping
     public ResponseEntity<Void> updateUnit(@RequestBody UnitInfoDto unitInfoDto) {
         if(unitService.update(unitInfoDto)){
             return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -48,7 +48,7 @@ public class UnitController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @DeleteMapping("/unit")
+    @DeleteMapping
     // 디바이스 삭제 API
     public ResponseEntity<Void> deleteUnit(@RequestBody UnitInfoDto unitInfoDto) {
         if(unitService.delete(unitInfoDto.getUnitCode())){
