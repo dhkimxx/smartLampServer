@@ -1,5 +1,6 @@
 package smartLamp.smartLampspring.service;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
 import smartLamp.smartLampspring.dto.UnitInfoDto;
 import smartLamp.smartLampspring.dto.UserInfoDto;
@@ -10,6 +11,7 @@ import smartLamp.smartLampspring.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Transactional
@@ -17,17 +19,17 @@ public class UnitService {
     private final UnitRepository unitRepository;
     private final UserRepository userRepository;
 
-    public UnitService(UnitRepository unitRepository, UserRepository userRepository){
+    public UnitService(UnitRepository unitRepository, UserRepository userRepository) {
         this.unitRepository = unitRepository;
         this.userRepository = userRepository;
     }
 
-    public boolean create(UnitInfoDto unitInfoDto){
-        Optional<Unit> storedUnit = unitRepository.findByCode(unitInfoDto.getUnitCode());
-        Optional<User> storedUser = userRepository.findById(unitInfoDto.getUserId());
-        if (storedUnit.isPresent() | storedUser.isEmpty()) {
-            return false;
-        }
+    public void create(UnitInfoDto unitInfoDto) {
+        unitRepository.findByCode(unitInfoDto.getUnitCode()).ifPresent(unit -> {
+            throw new DataIntegrityViolationException("unit already exists");
+        });
+
+        User storedUser = userRepository.findById(unitInfoDto.getUserId()).orElseThrow(() -> new NoSuchElementException("No user found"));
 
         Unit newUnit = new Unit();
         newUnit.setUnitCode(unitInfoDto.getUnitCode());
@@ -35,37 +37,27 @@ public class UnitService {
         newUnit.setDistance(unitInfoDto.getDistance());
         newUnit.setTime(unitInfoDto.getTime());
         newUnit.setBrightness(unitInfoDto.getBrightness());
-        newUnit.setUser(storedUser.get());
+        newUnit.setUser(storedUser);
         unitRepository.save(newUnit);
-        return true;
     }
 
-    public List<Unit> readUnitList(UserInfoDto userInfoDto){
-        Optional<User> storedUser = userRepository.findById(userInfoDto.getUserId());
-        if(storedUser.isPresent()){
-            return storedUser.get().getUnitList();
-        }
-        return new ArrayList<>();
+    public List<Unit> getUnitList(UserInfoDto userInfoDto) {
+        User storedUser = userRepository.findById(userInfoDto.getUserId()).orElseThrow(() -> new NoSuchElementException("No user Found"));
+
+        return storedUser.getUnitList();
     }
 
-    public boolean update(UnitInfoDto unitInfoDto){
-        Optional<Unit> storedUnit = unitRepository.findByCode(unitInfoDto.getUnitCode());
-        if (storedUnit.isPresent()) {
-            storedUnit.get().setDistance(unitInfoDto.getDistance());
-            storedUnit.get().setTime(unitInfoDto.getTime());
-            storedUnit.get().setBrightness(unitInfoDto.getBrightness());
-            unitRepository.save(storedUnit.get());
-            return true;
-        }
-        return false;
+    public void update(UnitInfoDto unitInfoDto) {
+        Unit storedUnit = unitRepository.findByCode(unitInfoDto.getUnitCode()).orElseThrow(() -> new NoSuchElementException("No unit Found"));
+
+        storedUnit.setDistance(unitInfoDto.getDistance());
+        storedUnit.setTime(unitInfoDto.getTime());
+        storedUnit.setBrightness(unitInfoDto.getBrightness());
+        unitRepository.save(storedUnit);
     }
 
-    public boolean delete(String unitCode){
-        Optional<Unit> storedUnit = unitRepository.findByCode(unitCode);
-        if(storedUnit.isPresent()){
-            unitRepository.delete(storedUnit.get());
-            return true;
-        }
-        return false;
+    public void delete(String unitCode) {
+        Unit storedUnit = unitRepository.findByCode(unitCode).orElseThrow(() -> new NoSuchElementException("No unit Found"));
+        unitRepository.delete(storedUnit);
     }
 }

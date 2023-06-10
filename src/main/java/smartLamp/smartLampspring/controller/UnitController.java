@@ -11,6 +11,7 @@ import smartLamp.smartLampspring.Entity.Unit;
 import smartLamp.smartLampspring.service.UnitService;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/unit")
@@ -26,34 +27,41 @@ public class UnitController {
     // 디바이스 정보 등록 API
     @PostMapping
     public ResponseEntity<Void> createUnit(@RequestBody UnitInfoDto unitInfoDto) {
-        if (unitService.create(unitInfoDto)) {
+        try {
+            unitService.create(unitInfoDto);
             return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
-        return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 
     // 디바이스 정보 반환 API
     @PostMapping("/unitList")
     public ResponseEntity<List<Unit>> getUnitList(@RequestBody UserInfoDto userInfoDto) {
-        return ResponseEntity.ok(unitService.readUnitList(userInfoDto));
+        return ResponseEntity.ok(unitService.getUnitList(userInfoDto));
     }
 
 
     // 디바이스 정보 수정
     @PutMapping
     public ResponseEntity<Void> updateUnit(@RequestBody UnitInfoDto unitInfoDto) {
-        if(unitService.update(unitInfoDto)){
+        try {
+            unitService.update(unitInfoDto);
             return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @DeleteMapping
     // 디바이스 삭제 API
+    @DeleteMapping
     public ResponseEntity<Void> deleteUnit(@RequestBody UnitInfoDto unitInfoDto) {
-        if(unitService.delete(unitInfoDto.getUnitCode())){
-            return ResponseEntity.ok().build();
+        try {
+            unitService.delete(unitInfoDto.getUnitCode());
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
 }
