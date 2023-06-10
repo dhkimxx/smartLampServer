@@ -41,7 +41,7 @@ public class UserController {
     }
 
     // 사용자 로그아웃 API
-    @DeleteMapping("/authenticate")
+    @PatchMapping("/authenticate")
     public ResponseEntity<Void> logoutUser(@RequestBody UserInfoDto userInfoDto) {
         try {
             userService.logout(userInfoDto);
