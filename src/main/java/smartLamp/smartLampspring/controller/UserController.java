@@ -7,6 +7,7 @@ import smartLamp.smartLampspring.dto.UserInfoDto;
 import smartLamp.smartLampspring.service.UserService;
 
 import javax.security.sasl.AuthenticationException;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/user")
@@ -30,14 +31,13 @@ public class UserController {
 
     // 사용자 인증 API
     @PostMapping("/authenticate")
-    public ResponseEntity<UserInfoDto> authenticateUser(@RequestBody UserInfoDto userInfoDto) {
+    public ResponseEntity<UserInfoDto> loginUser(@RequestBody UserInfoDto userInfoDto) {
         try {
             UserInfoDto userInfo = userService.login(userInfoDto);
             return ResponseEntity.ok(userInfo);
-        } catch (AuthenticationException e) {
+        } catch (AuthenticationException | NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-
     }
 
     // 사용자 로그아웃 API
