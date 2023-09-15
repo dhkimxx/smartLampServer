@@ -4,6 +4,7 @@ public class UserInfoDto {
     private String userId;
     private String userPw;
     private String userName;
+    private String phone;
 
     public String getUserId() {
         return userId;
@@ -27,5 +28,13 @@ public class UserInfoDto {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

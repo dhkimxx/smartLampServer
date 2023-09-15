@@ -51,6 +51,7 @@ public class UserService {
         newUser.setUserId(userInfoDto.getUserId());
         newUser.setUserPw(userInfoDto.getUserPw());
         newUser.setUserName(userInfoDto.getUserName());
+        newUser.setPhone(userInfoDto.getPhone());
         userRepository.save(newUser);
     }
 

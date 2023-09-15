@@ -15,6 +15,9 @@ public class User {
     private String userPw;
     @Column(name = "user_name")
     private String userName;
+    @Column
+    private String phone;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Unit> unitList;
@@ -51,6 +54,14 @@ public class User {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public List<Unit> getUnitList() {
