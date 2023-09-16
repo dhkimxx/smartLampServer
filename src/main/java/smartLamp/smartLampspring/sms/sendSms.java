@@ -39,6 +39,23 @@ public class sendSms {
 
     }
 
+    @PostMapping("/send-test")
+    public Message send(@RequestBody UnitInfoDto unitInfoDto) {
+        try {
+            Unit storedUnit = unitRepository.findByCode(unitInfoDto.getUnitCode())
+                    .orElseThrow(() -> new NoSuchElementException("No unit Found"));
+            User user = storedUnit.getUser();
+
+            Message message = new Message();
+            message.setFrom(environment.getProperty("sendFrom"));
+            message.setTo(user.getPhone());
+            message.setText("[SmartLampService]\n\n" + '`' + storedUnit.getUnitName() + '`' +  "에서 낙상사고가 예상됩니다.");
+            return message;
+
+        } catch (NoSuchElementException e) {
+            throw new RuntimeException(e);
+        }
+    }
     @PostMapping("/send-one")
     public SingleMessageSentResponse sendOne(@RequestBody UnitInfoDto unitInfoDto) {
         try {
