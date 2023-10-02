@@ -8,8 +8,9 @@ iot capstone project server
     |userId|사용자 고유 아이디|
     |userPw|사용자 비밀번호|
     |userName|사용자 이름|
+    |phone|사용자 연락처(전화번호)|
     |unitList|등록 디바이스 리스트|
-    |groupList|디바이스 그룹 리스트|
+    
 
 - Unit (디바이스 유닛 테이블)
     |컬럼명|설명|
@@ -18,11 +19,4 @@ iot capstone project server
     |unitName|디바이스 이름|
     |distance|탐지 거리|
     |time|점등 시간|
-    |groupCode|소속 그룹 코드|
-
-- Group (디바이스 그룹 테이블)
-    |컬럼명|설명|
-    |---|---|
-    |groupCode|그룹 고유 코드|
-    |groupName|그룹 이름|
-    |unitList|소속 디바이스 리스트|
+    |brightness|램프 밝기|
